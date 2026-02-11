@@ -82,7 +82,7 @@ db.students.insertMany([
 // ค้นหาจากรหัสนักศึกษา (Primary Key)
 db.students.createIndex({ "_id": 1 });
 
-// ค้นหาตามสังกัด เพื่อทำรายงานสถิตินักศึกษาแยกตามคณะ/สาขา
+// ค้นหาตามสังกัด เพื่อทำรายงานสถิตินักศึกษาแยกตามคณะและสาขา
 db.students.createIndex({ "facultyCode": 1, "majorCode": 1 });
 
 //ค้นหาประวัตินักศึกษาจากรหัส (Simple Query) ใช้สำหรับหน้า Profile
