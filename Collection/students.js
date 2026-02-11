@@ -79,6 +79,15 @@ db.students.insertMany([
   }
 ]);
 
-// Indexes
+// ค้นหาจากรหัสนักศึกษา (Primary Key)
 db.students.createIndex({ "_id": 1 });
+
+// ค้นหาตามสังกัด เพื่อทำรายงานสถิตินักศึกษาแยกตามคณะ/สาขา
 db.students.createIndex({ "facultyCode": 1, "majorCode": 1 });
+
+//ค้นหาประวัตินักศึกษาจากรหัส (Simple Query) ใช้สำหรับหน้า Profile
+db.students.findOne({ "_id": "66010001" });
+//ค้นหานักศึกษาที่มีผลการเรียนดี (Filter Query) ใช้สำหรับดึงรายชื่อนักศึกษาเกียรตินิยม หรือผู้ที่ได้ GPAX 3.50 ขึ้นไป
+db.students.find({ "gpax": { $gte: 3.50 } }, { name: 1, gpax: 1 });
+//ค้นหานักศึกษาแยกตามคณะ (Grouping) ใช้ตรวจสอบจำนวนนักศึกษาในคณะวิทยาศาสตร์ (SCI)
+db.students.find({ "facultyCode": "SCI" }).count();
