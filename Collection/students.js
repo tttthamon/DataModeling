@@ -1,8 +1,42 @@
-// students.js
 use("mju_grade_release");
 
 db.students.insertMany([
+{
+  "_id": "",                // รหัสนักศึกษา (Primary Key)
+  "name": "",               // ชื่อ-นามสกุลนักศึกษา
+  "email": "",              // อีเมลมหาวิทยาลัย
+  "phone": "",              // เบอร์โทรศัพท์ติดต่อ
+  "facultyCode": "",        // รหัสคณะ
+  "facultyName": "",        // ชื่อคณะ
+  "majorCode": "",          // รหัสสาขาวิชา
+  "majorName": "",          // ชื่อสาขาวิชา
+  "gpax": 0.0,              // เกรดเฉลี่ยสะสม (GPAX)
+  "status": "",             // สถานะนักศึกษา (เช่น ปกติ)
+  "academicHistory": [      // ประวัติการเรียนแยกตามเทอม (Array of Objects)
+    {
+      "year": 0,            // ปีการศึกษา
+      "term": "",           // ภาคเรียน
+      "courses": [          // รายการวิชาที่เรียนในเทอมนั้น (Nested Array)
+        {
+          "courseId": "",   // รหัสวิชา
+          "courseName": "", // ชื่อวิชา
+          "credit": 0,      // หน่วยกิต
+          "grade": "",      // เกรดที่ได้
+          "point": 0.0,     // แต้มคะแนน
+          "status": ""      // สถานะรายวิชา
+        }
+      ]
+    }
+  ]
+}])
+// students.js
+// เลือกใช้งานฐานข้อมูลที่กำหนด
+use("mju_grade_release");
+
+// เพิ่มข้อมูลโปรไฟล์นักศึกษา (Students) ทั้งหมด 5 รายการ
+db.students.insertMany([
   {
+    // กำหนดรหัสนักศึกษาเป็น ID หลัก
     "_id": "66010001",
     "name": "นายสมชาย ใจดี",
     "email": "somchai_j@mju.ac.th",
@@ -13,10 +47,12 @@ db.students.insertMany([
     "majorName": "วิทยาการคอมพิวเตอร์",
     "gpax": 3.42,
     "status": "ปกติ",
+    // ประวัติการศึกษา (Embedded Documents) เก็บเป็นรายปีและเทอม
     "academicHistory": [
       {
         "year": 2567,
         "term": "1",
+        // รายการวิชาที่เรียนในเทอมนั้นๆ เพื่อใช้แสดงผล Transcript รายบุคคล
         "courses": [
           { "courseId": "CS101", "courseName": "Intro to CS", "credit": 3, "grade": "A", "point": 4.0, "status": "ปกติ" },
           { "courseId": "MA101", "courseName": "Calculus I", "credit": 3, "grade": "C+", "point": 2.5, "status": "ปกติ" },
@@ -36,7 +72,7 @@ db.students.insertMany([
     "majorName": "วิทยาการคอมพิวเตอร์",
     "gpax": 3.10,
     "status": "ปกติ",
-    "academicHistory": []
+    "academicHistory": [] // กรณีนักศึกษาใหม่ที่ยังไม่มีประวัติการเรียนสะสม
   },
   {
     "_id": "66010003",
@@ -78,7 +114,6 @@ db.students.insertMany([
     "academicHistory": []
   }
 ]);
-
 // ค้นหาจากรหัสนักศึกษา (Primary Key)
 db.students.createIndex({ "_id": 1 });
 
